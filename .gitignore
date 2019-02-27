@@ -4,3 +4,6 @@
 .idea
 
 secure-url.sqlite3
+
+media/*
+static/*

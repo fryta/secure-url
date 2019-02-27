@@ -10,16 +10,26 @@
                 padding: 20px;
             }
 
+            .home-button{
+                position: absolute;
+                top: 20px;
+                left: 20px;
+            }
+
             .content-centered{
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 100vh;
+                height: calc(100vh - 40px);
             }
 
             .content-centered .centered-container{
                 max-width: 400px;
                 width: 100%;
+            }
+
+            .content-centered .centered-container.full-width{
+                max-width: 100%;
             }
 
             .text-center{
@@ -28,6 +38,10 @@
         </style>
     </head>
     <body>
+        {% block home %}
+            <div class="home-button"><a href="{% url 'home' %}"><i class="material-icons">home</i></a></div>
+        {% endblock %}
+
         {% block content %}{% endblock %}
 
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
