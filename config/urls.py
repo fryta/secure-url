@@ -20,10 +20,10 @@ from django.urls import path
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    path('accounts/login/',
+    path('login/',
          auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='static/login.html'),
          name='accounts-login'),
-    path('accounts/logout/', auth_views.LogoutView.as_view(), name='accounts-logout'),
+    path('logout/', auth_views.LogoutView.as_view(), name='accounts-logout'),
 
     path('admin/', admin.site.urls),
 
