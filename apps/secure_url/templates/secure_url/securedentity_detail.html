@@ -11,12 +11,19 @@
         <p>
             {% trans "Secured URL for uploaded entity:" %}
             <a href="{{url}}" target="_blank">{{url}}</a>
-            <button class="btn btn-small copy" data-clipboard-text="{{url}}">copy</button>
+            <button class="btn btn-small copy" data-clipboard-text="{{url}}">{% trans "copy" %}</button>
         </p>
 
         <p>
             {% trans "Password:" %} {{ object.password }}
-            <button class="btn btn-small copy" data-clipboard-text="{{ object.password }}">copy</button>
+            <button class="btn btn-small copy" data-clipboard-text="{{ object.password }}">{% trans "copy" %}</button>
+        </p>
+
+        <p>
+            <form method="post" action="{% url 'secure_url:secured-entity-regenerate-password-view' object.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-small">{% trans "Regenerate password" %}</button>
+            </form>
         </p>
     </div>
 

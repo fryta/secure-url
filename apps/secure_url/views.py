@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls.base import reverse
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import CreateView, FormView, UpdateView
 from django.views.generic.list import ListView
 
 from .forms import SecuredEntityAccessForm
@@ -34,6 +35,19 @@ class SecuredEntityDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailVie
         context['url'] = self.request.build_absolute_uri(
             reverse('secure_url:secured-entity-access-view', args=(self.object.pk,)))
         return context
+
+
+class SecuredEntityRegeneratePasswordView(UpdateView):
+    model = SecuredEntity
+    fields = []
+
+    def get(self, request, *args, **kwargs):
+        secured_entity = get_object_or_404(SecuredEntity, pk=kwargs['pk'])
+        return HttpResponseRedirect(secured_entity.get_absolute_url())
+
+    def form_valid(self, form):
+        self.object.regenerate_password()
+        return super().form_valid(form)
 
 
 class SecuredEntityListView(LoginRequiredMixin, ListView):

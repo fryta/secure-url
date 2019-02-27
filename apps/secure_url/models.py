@@ -46,6 +46,10 @@ class SecuredEntity(models.Model):
     def get_redirect_url(self):
         return self.url if self.url else self.file.url
 
+    def regenerate_password(self):
+        self.password_salt = self.generate_password_salt()
+        self.save(update_fields=['password_salt'])
+
     def generate_password_salt(self):
         return md5('SecureUrlHashing{}-z`xcvge-{}--{}'.format(settings.SECRET_KEY,
                                                               timezone.now(),
