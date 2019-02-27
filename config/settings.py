@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
     'material',
 
-    'apps.secure_url'
+    'apps.secure_url',
+    'apps.user_agent_watchdog'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'apps.user_agent_watchdog.middlewares.UserAgentLogMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
