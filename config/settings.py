@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'apps.secure_url',
+    'apps.secure_url.api',
     'apps.user_agent_watchdog'
 ]
 
