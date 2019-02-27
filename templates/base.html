@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Secure URL</title>
+
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        {% include 'material/includes/material_css.html' %}
+        <style>
+            body{
+                padding: 20px;
+            }
+
+            .content-centered{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+
+            .content-centered .centered-container{
+                max-width: 400px;
+                width: 100%;
+            }
+
+            .text-center{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        {% include 'material/includes/material_js.html' %}
+    </body>
+</html>
