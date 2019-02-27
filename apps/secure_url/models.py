@@ -1,5 +1,4 @@
 import uuid
-from datetime import timedelta
 from hashlib import md5
 
 from django.conf import settings
