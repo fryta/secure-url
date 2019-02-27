@@ -5,7 +5,7 @@
     <div class="centered-container text-center">
         <p>Welcome {{ user.username }}. What do you want to do?</p>
         <p>
-            <a href="/" class="btn">Submit new URL or file</a>
+            <a href="{% url 'secure_url:secured-entity-create-view' %}" class="btn">Submit new URL or file</a>
         </p>
         <p>
             <a href="/" class="btn">Browse submitted items</a>

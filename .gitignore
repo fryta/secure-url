@@ -4,3 +4,5 @@
 .idea
 
 secure-url.sqlite3
+
+**/files/*

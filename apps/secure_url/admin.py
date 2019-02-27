@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import SecuredEntity
+
+
+@admin.register(SecuredEntity)
+class SecuredEntityAdmin(admin.ModelAdmin):
+    list_display = ('user', 'created')
