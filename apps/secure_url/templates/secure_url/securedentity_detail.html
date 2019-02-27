@@ -1,20 +1,21 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="content-centered">
     <div class="centered-container full-width text-center">
         {% if request.GET.created %}
-            <p>Thank you for uploading {% if object.url %}URL{% else %}file{% endif %}.</p>
+            <p>{% trans "Thank you for uploading this item." %}</p>
         {% endif %}
 
         <p>
-            Secured URL for uploaded entity:
+            {% trans "Secured URL for uploaded entity:" %}
             <a href="{{url}}" target="_blank">{{url}}</a>
             <button class="btn btn-small copy" data-clipboard-text="{{url}}">copy</button>
         </p>
 
         <p>
-            Password: {{ object.password }}
+            {% trans "Password:" %} {{ object.password }}
             <button class="btn btn-small copy" data-clipboard-text="{{ object.password }}">copy</button>
         </p>
     </div>
