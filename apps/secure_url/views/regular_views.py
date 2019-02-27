@@ -6,9 +6,9 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from django.views.generic.list import ListView
 
-from .forms import SecuredEntityAccessForm
-from .mixins import EditOnlyOwnSecuredEntitiesMixin
-from .models import SecuredEntity, SecuredEntityAccessLog
+from ..forms import SecuredEntityAccessForm
+from ..mixins import EditOnlyOwnSecuredEntitiesMixin
+from ..models import SecuredEntity, SecuredEntityAccessLog
 
 
 class SecuredEntityCreateView(LoginRequiredMixin, CreateView):
