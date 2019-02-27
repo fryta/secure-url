@@ -59,3 +59,14 @@ class SecuredEntity(models.Model):
 
     class Meta:
         ordering = ('-created',)
+
+
+class SecuredEntityAccessLog(models.Model):
+    secured_entity = models.ForeignKey(SecuredEntity, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return 'Secured item: {} visited: {}'.format(self.secured_entity, self.created)
+
+    class Meta:
+        ordering = ('-created',)

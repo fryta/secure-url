@@ -8,7 +8,7 @@ from django.views.generic.list import ListView
 
 from .forms import SecuredEntityAccessForm
 from .mixins import EditOnlyOwnSecuredEntitiesMixin
-from .models import SecuredEntity
+from .models import SecuredEntity, SecuredEntityAccessLog
 
 
 class SecuredEntityCreateView(LoginRequiredMixin, CreateView):
@@ -70,3 +70,7 @@ class SecuredEntityAccessView(FormView):
 
     def get_success_url(self):
         return self.object.get_redirect_url()
+
+    def form_valid(self, form):
+        SecuredEntityAccessLog.objects.create(secured_entity=self.object)
+        return super().form_valid(form)
