@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from django.urls import path
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
-    path('accounts/logout/', auth_views.LogoutView.as_view()),
+    path('accounts/login/',
+         auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='static/login.html'),
+         name='accounts-login'),
+    path('accounts/logout/', auth_views.LogoutView.as_view(), name='accounts-logout'),
 
     path('admin/', admin.site.urls),
+
+    path('', login_required(TemplateView.as_view(template_name='static/home.html')), name='home'),
 ]

@@ -6,7 +6,7 @@
     <div class="centered-container">
         <p class="text-center">Please login in order to get access to Secure URL.</p>
 
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'accounts-login' %}">
             {% csrf_token %}
             {% form %}
                 {% part form.username prefix %}<i class="material-icons prefix">account_box</i>{% endpart %}
