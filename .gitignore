@@ -1,2 +1,6 @@
+*.pyc
+
 .python-version
 .idea
+
+secure-url.sqlite3
