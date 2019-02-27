@@ -1,4 +1,5 @@
 import uuid
+from datetime import timedelta
 from hashlib import md5
 
 from django.conf import settings
@@ -8,7 +9,7 @@ from django.core.validators import URLValidator
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 
 class SecuredEntity(models.Model):
@@ -22,6 +23,10 @@ class SecuredEntity(models.Model):
     @property
     def password(self):
         return md5('{}-{}'.format(self.password_salt, self.pk).encode('utf-8')).hexdigest()[:12]
+
+    @property
+    def is_accessible(self):
+        return self.created + settings.SECURED_ENTITY_ACCESSIBLE_TIME > timezone.now()
 
     def clean(self):
         if not self.url and not self.file:
@@ -37,6 +42,9 @@ class SecuredEntity(models.Model):
 
     def get_absolute_url(self):
         return reverse('secure_url:secured-entity-detail-view', kwargs={'pk': self.pk})
+
+    def get_redirect_url(self):
+        return self.url if self.url else self.file.url
 
     def generate_password_salt(self):
         return md5('SecureUrlHashing{}-z`xcvge-{}--{}'.format(settings.SECRET_KEY,

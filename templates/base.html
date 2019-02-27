@@ -20,12 +20,16 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 100vh;
+                height: calc(100vh - 40px);
             }
 
             .content-centered .centered-container{
                 max-width: 400px;
                 width: 100%;
+            }
+
+            .content-centered .centered-container.full-width{
+                max-width: 100%;
             }
 
             .text-center{
@@ -34,7 +38,9 @@
         </style>
     </head>
     <body>
-        <div class="home-button"><a href="{% url 'home' %}"><i class="material-icons">home</i></a></div>
+        {% block home %}
+            <div class="home-button"><a href="{% url 'home' %}"><i class="material-icons">home</i></a></div>
+        {% endblock %}
 
         {% block content %}{% endblock %}
 

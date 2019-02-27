@@ -2,8 +2,26 @@
 
 {% block content %}
 <div class="content-centered">
-    <div class="centered-container">
-        {{ object }}
+    <div class="centered-container full-width text-center">
+        {% if request.GET.created %}
+            <p>Thank you for uploading {% if object.url %}URL{% else %}file{% endif %}.</p>
+        {% endif %}
+
+        <p>
+            Secured URL for uploaded entity:
+            <a href="{{url}}" target="_blank">{{url}}</a>
+            <button class="btn btn-small copy" data-clipboard-text="{{url}}">copy</button>
+        </p>
+
+        <p>
+            Password: {{ object.password }}
+            <button class="btn btn-small copy" data-clipboard-text="{{ object.password }}">copy</button>
+        </p>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script>
+        new ClipboardJS('.copy');
+    </script>
 </div>
 {% endblock %}
