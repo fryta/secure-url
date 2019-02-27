@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if object_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Created</th>
+                    <th>Type</th>
+                    <th>Is accessible</th>
+                    <th>Edit</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td>{{ object.created }}</td>
+                        <td>{% if object.url %}URL{% else %}File{% endif %}</td>
+                        <td>{{ object.is_accessible }}</td>
+                        <td><a href="{% url 'secure_url:secured-entity-detail-view' object.pk %}" class="btn">Details</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="content-centered">
+            <div class="centered-container">
+                <p class="text-center">No items yet.</p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,9 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls.base import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.views.generic.list import ListView
 
 from .forms import SecuredEntityAccessForm
 from .models import SecuredEntity
@@ -33,6 +34,14 @@ class SecuredEntityDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailVie
         context['url'] = self.request.build_absolute_uri(
             reverse('secure_url:secured-entity-access-view', args=(self.object.pk,)))
         return context
+
+
+class SecuredEntityListView(LoginRequiredMixin, ListView):
+    model = SecuredEntity
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
 
 
 class SecuredEntityAccessView(FormView):

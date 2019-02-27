@@ -8,7 +8,7 @@
             <a href="{% url 'secure_url:secured-entity-create-view' %}" class="btn">Submit new URL or file</a>
         </p>
         <p>
-            <a href="/" class="btn">Browse submitted items</a>
+            <a href="{% url 'secure_url:secured-entity-list-view' %}" class="btn">Browse submitted items</a>
         </p>
         <p>
             <a href="{% url 'accounts-logout' %}">logout</a>
