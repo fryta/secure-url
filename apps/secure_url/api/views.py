@@ -1,12 +1,26 @@
 from django.db import connection
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 
 from ..constants import SecuredEntityTypes
 from ..models import SecuredEntityAccessLog, SecuredEntity
+from .serializers import SecuredEntitySerializer
+
+
+class SecuredEntityCreateListRetrieveApiViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = SecuredEntitySerializer
+
+    def get_queryset(self):
+        return SecuredEntity.objects.filter(user=self.request.user)
 
 
 class SecuredEntityStatsApiView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def _prepare_stats(self):
         # Since there is no proper support for GROUP BY in django ORM the raw query is used here.
         # Its efficient but could be risky while changing database engine.
