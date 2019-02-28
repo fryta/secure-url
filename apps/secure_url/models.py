@@ -3,12 +3,10 @@ from hashlib import md5
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 
 from .constants import SecuredEntityTypes
 
@@ -30,18 +28,13 @@ class SecuredEntity(models.Model):
     def is_accessible(self):
         return self.created + settings.SECURED_ENTITY_ACCESSIBLE_TIME > timezone.now()
 
-    def clean(self):
-        if not self.url and not self.file:
-            raise ValidationError(_('You have to provide either url or file.'))
+    def save(self, *args, **kwargs):
+        if not self.password_salt:
+            self.password_salt = self.generate_password_salt()
 
-        if self.url and self.file:
-            raise ValidationError(_('You can\'t provide both url or file.'))
-
-        if not self.user:
-            raise ValidationError(_('User field is required.'))
-
-        self.password_salt = self.generate_password_salt()
         self.type = SecuredEntityTypes.LINK if self.url else SecuredEntityTypes.FILE
+
+        return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('secure_url:secured-entity-detail-view', kwargs={'pk': self.pk})
