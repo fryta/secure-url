@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from rest_framework.routers import DefaultRouter
 
 from .views import SecuredEntityStatsApiView, SecuredEntityCreateListRetrieveApiViewSet, \
-    SecuredEntityRegeneratePasswordApiView
+    SecuredEntityRegeneratePasswordApiView, SecuredEntityAccessApiView
 
 app_name = 'secure_url.api'
 
@@ -10,6 +10,8 @@ urlpatterns = [
     path('stats/', SecuredEntityStatsApiView.as_view(), name='secured-entity-stats-api-view'),
     re_path(r'^regenerate-password/(?P<pk>[a-zA-Z0-9-]{36})/?$', SecuredEntityRegeneratePasswordApiView.as_view(),
             name='secured-entity-regenerate-password-api-view'),
+    re_path(r'^get-access/(?P<pk>[a-zA-Z0-9-]{36})/?$', SecuredEntityAccessApiView.as_view(),
+            name='secured-entity-get-access-api-view'),
 ]
 
 secured_entity_api_router = DefaultRouter()

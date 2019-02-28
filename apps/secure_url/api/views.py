@@ -1,12 +1,12 @@
 from django.db import connection
-from django.shortcuts import get_object_or_404
+from rest_framework.generics import get_object_or_404
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
-from .serializers import SecuredEntitySerializer
+from .serializers import SecuredEntitySerializer, SecuredEntityAccessSerializer
 from ..constants import SecuredEntityTypes
 from ..models import SecuredEntityAccessLog, SecuredEntity
 
@@ -17,6 +17,20 @@ class SecuredEntityCreateListRetrieveApiViewSet(CreateModelMixin, ListModelMixin
 
     def get_queryset(self):
         return SecuredEntity.objects.filter(user=self.request.user)
+
+
+class SecuredEntityAccessApiView(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request, pk):
+        secured_entity = get_object_or_404(SecuredEntity, pk=pk)
+
+        access_serializer = SecuredEntityAccessSerializer(data=request.data, context={'secured_entity': secured_entity})
+        access_serializer.is_valid(raise_exception=True)
+
+        SecuredEntityAccessLog.objects.create(secured_entity=secured_entity)
+
+        return Response({'secured_entity': request.build_absolute_uri(secured_entity.get_redirect_url())})
 
 
 class SecuredEntityRegeneratePasswordApiView(APIView):

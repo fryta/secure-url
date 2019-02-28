@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 
 from ..models import SecuredEntity
+from ..validators import validate_secured_entity
 
 
 class SecuredEntitySerializer(serializers.ModelSerializer):
@@ -11,8 +13,8 @@ class SecuredEntitySerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def get_access_url(self, obj):
-        # TODO: add it
-        return 'aaa'
+        return self.context['request'].build_absolute_uri(
+            reverse('secure_url.api:secured-entity-get-access-api-view', args=(obj.pk,)))
 
     class Meta:
         model = SecuredEntity
@@ -24,10 +26,9 @@ class SecuredEntitySerializer(serializers.ModelSerializer):
         }
 
 
-class SecuredEntitySerializerRegeneratePasswordSerializer(serializers.Serializer):
+class SecuredEntityAccessSerializer(serializers.Serializer):
     password = serializers.CharField()
 
-    def validate_password(self, *args, **kwargs):
-        import pdb
-        pdb.set_trace()
-        pass
+    def validate(self, data):
+        validate_secured_entity(data, self.context['secured_entity'])
+        return data
