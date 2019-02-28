@@ -22,6 +22,7 @@ from django.views.generic.base import TemplateView
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('api/secure-url/', include('apps.secure_url.api.urls')),
     path('secure-url/', include('apps.secure_url.urls')),
 
     path('login/',

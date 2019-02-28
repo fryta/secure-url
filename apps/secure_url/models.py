@@ -10,6 +10,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from .constants import SecuredEntityTypes
+
 
 class SecuredEntity(models.Model):
     id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4, editable=False)
@@ -17,6 +19,7 @@ class SecuredEntity(models.Model):
     password_salt = models.CharField(max_length=32)
     url = models.TextField(null=True, default=None, blank=True, validators=[URLValidator()])
     file = models.FileField(upload_to='secure_url/files', null=True, default=None, blank=True)
+    type = models.CharField(max_length=10, choices=SecuredEntityTypes.get_choices(), default=SecuredEntityTypes.LINK)
     created = models.DateTimeField(auto_now_add=True)
 
     @property
@@ -38,6 +41,7 @@ class SecuredEntity(models.Model):
             raise ValidationError(_('User field is required.'))
 
         self.password_salt = self.generate_password_salt()
+        self.type = SecuredEntityTypes.LINK if self.url else SecuredEntityTypes.FILE
 
     def get_absolute_url(self):
         return reverse('secure_url:secured-entity-detail-view', kwargs={'pk': self.pk})
