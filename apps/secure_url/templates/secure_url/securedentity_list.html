@@ -16,7 +16,7 @@
                 {% for object in object_list %}
                     <tr>
                         <td>{{ object.created }}</td>
-                        <td>{% if object.url %}{% trans "URL" %}{% else %}{% trans "File" %}{% endif %}</td>
+                        <td>{{ object.type }}</td>
                         <td>{{ object.is_accessible }}</td>
                         <td><a href="{% url 'secure_url:secured-entity-detail-view' object.pk %}" class="btn">{% trans "Details" %}</a></td>
                     </tr>
