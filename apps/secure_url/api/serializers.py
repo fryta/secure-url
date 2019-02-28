@@ -22,3 +22,12 @@ class SecuredEntitySerializer(serializers.ModelSerializer):
             'url': {'write_only': True},
             'file': {'write_only': True}
         }
+
+
+class SecuredEntitySerializerRegeneratePasswordSerializer(serializers.Serializer):
+    password = serializers.CharField()
+
+    def validate_password(self, *args, **kwargs):
+        import pdb
+        pdb.set_trace()
+        pass

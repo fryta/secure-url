@@ -1,13 +1,14 @@
 from django.db import connection
+from django.shortcuts import get_object_or_404
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
+from .serializers import SecuredEntitySerializer
 from ..constants import SecuredEntityTypes
 from ..models import SecuredEntityAccessLog, SecuredEntity
-from .serializers import SecuredEntitySerializer
 
 
 class SecuredEntityCreateListRetrieveApiViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
@@ -16,6 +17,15 @@ class SecuredEntityCreateListRetrieveApiViewSet(CreateModelMixin, ListModelMixin
 
     def get_queryset(self):
         return SecuredEntity.objects.filter(user=self.request.user)
+
+
+class SecuredEntityRegeneratePasswordApiView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, pk):
+        secured_entity = get_object_or_404(SecuredEntity, pk=pk, user=request.user)
+        secured_entity.regenerate_password()
+        return Response(SecuredEntitySerializer(secured_entity).data)
 
 
 class SecuredEntityStatsApiView(APIView):
