@@ -20,7 +20,7 @@ class BaseApiTestCase(APITestCase):
         self.extra_with_permissions = dict(self.extra, HTTP_AUTHORIZATION='Basic {}'.format(
             b64encode('{}:{}'.format(username, password).encode()).decode('utf-8')))
         self.data_with_url = {
-            'url': 'https://www.facebook.com'
+            'url': 'https://www.facebook.com/'
         }
 
     def _get_tmp_file(self):
