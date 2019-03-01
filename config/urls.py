@@ -35,7 +35,6 @@ urlpatterns = [
     path('', login_required(TemplateView.as_view(template_name='static/home.html')), name='home'),
 ]
 
-# This should only be used only for development, but this app is a recruitment task and media server
-# config is not the main scope of it, so leaving a "development" solution for "production" in Heroku.
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
