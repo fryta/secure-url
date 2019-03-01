@@ -35,6 +35,9 @@ Hope you will like it and find it useful :)
 * `python manage.py test` (make sure you've run `python manage.py collectstatic` before)
 
 ## API
+* API url: `http://secure-url.herokuapp.com/api/`
+* When entering API url you will see full documentation of the api (please login with demo admin credentials to see
+all available endpoints). 
 
 ## Demo
 Live demo is available here: `https://secure-url.herokuapp.com`

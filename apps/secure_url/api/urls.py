@@ -6,6 +6,8 @@ from .views import SecuredEntityStatsApiView, SecuredEntityCreateListRetrieveApi
 
 app_name = 'secure_url.api'
 
+
+
 urlpatterns = [
     path('stats/', SecuredEntityStatsApiView.as_view(), name='secured-entity-stats-api-view'),
     re_path(r'^regenerate-password/(?P<pk>[a-zA-Z0-9-]{36})/?$', SecuredEntityRegeneratePasswordApiView.as_view(),
