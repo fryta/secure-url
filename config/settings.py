@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'material',
     'rest_framework',
     'django_extensions',
+    'rest_framework_swagger',
 
     'apps.secure_url',
     'apps.secure_url.api',

@@ -12,6 +12,11 @@ from ..models import SecuredEntityAccessLog, SecuredEntity
 
 
 class SecuredEntityCreateListRetrieveApiViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
+    """
+    Api view set to: create, retrieve, list secured entities.
+
+    @:param id - primary key of secured entity item
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = SecuredEntitySerializer
 
@@ -20,6 +25,12 @@ class SecuredEntityCreateListRetrieveApiViewSet(CreateModelMixin, ListModelMixin
 
 
 class SecuredEntityAccessApiView(APIView):
+    """
+    Restricts or grants the access to the secured entity.
+
+    @:param id - primary key of secured entity item
+    @:param password - password for specific secured entity
+    """
     permission_classes = (AllowAny,)
 
     def post(self, request, pk):
@@ -34,6 +45,11 @@ class SecuredEntityAccessApiView(APIView):
 
 
 class SecuredEntityRegeneratePasswordApiView(APIView):
+    """
+    Regenerates password for a secured entity.
+
+    @:param id - primary key of secured entity item
+    """
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, pk):
@@ -43,6 +59,9 @@ class SecuredEntityRegeneratePasswordApiView(APIView):
 
 
 class SecuredEntityStatsApiView(APIView):
+    """
+    Generates the stats for number of unique visits for links or files.
+    """
     permission_classes = (IsAuthenticated,)
 
     def _prepare_stats(self):

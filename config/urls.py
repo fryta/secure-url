@@ -13,16 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.urls import path, include
 from django.views.generic.base import TemplateView
-from django.conf.urls.static import static
+from rest_framework_swagger.views import get_swagger_view
+
+api_schema_view = get_swagger_view(title='Secure URL - API')
 
 urlpatterns = [
     path('api/secure-url/', include('apps.secure_url.api.urls')),
+    path('api/', api_schema_view),
+
     path('secure-url/', include('apps.secure_url.urls')),
 
     path('login/',
