@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 
 
 def validate_access_to_secured_entity(data, secured_entity):
-    if data['password'] != secured_entity.password:
+    if 'password' not in data or data['password'] != secured_entity.password:
         raise ValidationError({'password': _('Password do not match.')})
 
     if not secured_entity.is_accessible:
@@ -16,6 +16,6 @@ def validate_secured_entity(data):
         raise ValidationError(_('You have to provide either url or file.'))
 
     if data.get('url') and data.get('file'):
-        raise ValidationError(_('You can\'t provide both url or file.'))
+        raise ValidationError(_('You cannot provide both url or file.'))
 
     return data

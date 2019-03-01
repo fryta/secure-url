@@ -128,4 +128,4 @@ class SecuredEntityCreateViewTest(BaseViewTest):
         with open(tmp_file.name, 'rb') as file:
             response = self.client.post(self.create_url, dict(self.data_with_url, file=file))
 
-        self.assertContains(response, 'provide both url or file.')
+        self.assertContains(response, 'You cannot provide both url or file.')

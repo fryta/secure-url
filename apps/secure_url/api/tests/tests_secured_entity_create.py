@@ -136,6 +136,6 @@ class SecuredEntityCreateApiTest(BaseApiTestCase):
 
         self.assertDictEqual({
             "non_field_errors": [
-                "You can't provide both url or file."
+                "You cannot provide both url or file."
             ]
         }, response.data)
