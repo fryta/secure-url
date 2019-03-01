@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
@@ -153,3 +154,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = LOGIN_URL
 
 SECURED_ENTITY_ACCESSIBLE_TIME = timedelta(hours=24)
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
