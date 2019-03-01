@@ -31,6 +31,20 @@ class SecuredEntityCreateApiTest(BaseApiTestCase):
             ]
         }, response.data)
 
+    def test_create_secured_entity_with_wrong_url_results_in_400(self):
+        response = self.client.post(self.list_create_url, {'url': 'xxx'}, format='json', **self.extra_with_permissions)
+
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+
+    def test_create_secured_entity_with_wrong_url_returns_correct_response(self):
+        response = self.client.post(self.list_create_url, {'url': 'xxx'}, format='json', **self.extra_with_permissions)
+
+        self.assertDictEqual({
+            "url": [
+                "Enter a valid URL."
+            ]
+        }, response.data)
+
     def test_successful_create_secured_entity_from_url_results_in_201(self):
         response = self.client.post(self.list_create_url, self.data_with_url, format='json',
                                     **self.extra_with_permissions)
