@@ -65,8 +65,11 @@ class SecuredEntityStatsApiView(APIView):
             cursor.execute(raw_query)
 
             for stat_item in cursor.fetchall():
-                daily_stats = stats.setdefault(stat_item[0], {SecuredEntityTypes.FILE: 0,
-                                                              SecuredEntityTypes.LINK: 0})
+                # required because in Heroku stat_item[0] is a datetime.date object...
+                date = stat_item[0] if isinstance(stat_item[0], str) else stat_item[0].strftime('%Y-%m-%d')
+
+                daily_stats = stats.setdefault(date, {SecuredEntityTypes.FILE: 0,
+                                                      SecuredEntityTypes.LINK: 0})
                 daily_stats[stat_item[1]] = stat_item[2]
 
         return stats
