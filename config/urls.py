@@ -22,11 +22,11 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 from rest_framework_swagger.views import get_swagger_view
 
-schema_view = get_swagger_view(title='Secure URL - API')
+api_schema_view = get_swagger_view(title='Secure URL - API')
 
 urlpatterns = [
     path('api/secure-url/', include('apps.secure_url.api.urls')),
-    path('api/', schema_view),
+    path('api/', api_schema_view),
 
     path('secure-url/', include('apps.secure_url.urls')),
 
