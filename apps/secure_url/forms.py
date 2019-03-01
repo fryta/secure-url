@@ -1,7 +1,17 @@
 from django import forms
 
 from .models import SecuredEntity
-from .validators import validate_secured_entity
+from .validators import validate_access_to_secured_entity, validate_secured_entity
+
+
+class SecuredEntityForm(forms.Form):
+
+    def clean(self):
+        return validate_secured_entity(self.cleaned_data)
+
+    class Meta:
+        model = SecuredEntity
+        fields = ['url', 'file']
 
 
 class SecuredEntityAccessForm(forms.Form):
@@ -11,6 +21,4 @@ class SecuredEntityAccessForm(forms.Form):
         cleaned_data = super().clean()
         secured_entity = SecuredEntity.objects.get(pk=self.data['id'])
 
-        validate_secured_entity(self.cleaned_data, secured_entity)
-
-        return cleaned_data
+        return validate_access_to_secured_entity(cleaned_data, secured_entity)

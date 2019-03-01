@@ -6,14 +6,13 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from django.views.generic.list import ListView
 
-from .forms import SecuredEntityAccessForm
+from .forms import SecuredEntityAccessForm, SecuredEntityForm
 from .mixins import EditOnlyOwnSecuredEntitiesMixin
 from .models import SecuredEntity, SecuredEntityAccessLog
 
 
 class SecuredEntityCreateView(LoginRequiredMixin, CreateView):
-    model = SecuredEntity
-    fields = ['url', 'file']
+    form_class = SecuredEntityForm
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
