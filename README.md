@@ -38,6 +38,8 @@ Hope you will like it and find it useful :)
 * API url: `http://secure-url.herokuapp.com/api/`
 * When entering API url you will see full documentation of the api (please login with demo admin credentials to see
 all available endpoints). 
+* Alternatively you can use djangorestframework UI to browse API, just enter any available URL, e.g.: 
+`https://secure-url.herokuapp.com/api/secure-url/`
 
 ## Demo
 Live demo is available here: `https://secure-url.herokuapp.com`
@@ -61,6 +63,7 @@ Demo is hosted on heroku so it has some drawbacks:
     * solution: https://devcenter.heroku.com/articles/django-assets
 * uploaded media files are removed on each deploy or when heroku dyno is being freezed
     * solution: https://devcenter.heroku.com/articles/s3
+* djangorestframework UI for browsing API is not disabled for demo purposes
 
 ## Know issues in project
  * uploaded files are now kept in public location defined by `MEDIA_ROOT` and are accessible by `MEDIA_URL`. 
