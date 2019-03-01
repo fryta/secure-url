@@ -4,7 +4,7 @@ from .models import SecuredEntity
 from .validators import validate_access_to_secured_entity, validate_secured_entity
 
 
-class SecuredEntityForm(forms.Form):
+class SecuredEntityForm(forms.ModelForm):
 
     def clean(self):
         return validate_secured_entity(self.cleaned_data)

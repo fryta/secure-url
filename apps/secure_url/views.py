@@ -12,6 +12,7 @@ from .models import SecuredEntity, SecuredEntityAccessLog
 
 
 class SecuredEntityCreateView(LoginRequiredMixin, CreateView):
+    model = SecuredEntity
     form_class = SecuredEntityForm
 
     def get_form(self, *args, **kwargs):

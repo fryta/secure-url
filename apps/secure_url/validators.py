@@ -18,7 +18,4 @@ def validate_secured_entity(data):
     if data.get('url') and data.get('file'):
         raise ValidationError(_('You can\'t provide both url or file.'))
 
-    if not data.get('user'):
-        raise ValidationError(_('User field is required.'))
-
     return data
